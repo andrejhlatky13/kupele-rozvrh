@@ -9,7 +9,7 @@ const fmtDate=s=>{const d=new Date(s+'T12:00');return DN[d.getDay()]+' '+d.getDa
 const empty=()=>({patient:{name:'',room:'',spa:'',doctor:''},stay:{from:'',to:''},
  meals:{shift:1,items:[{name:'Raňajky',time:'08:00',end:'09:00'},{name:'Obed',time:'12:00',end:'13:00'},{name:'Večera',time:'18:00',end:'19:00'}],skipLunch:false},
  tipRules:[{match:'vírivka|bazén|inhalácia man',tip:'🩳 Zober si plavky'}],notifyMinutes:[30,15],fontSize:19,events:[]});
-const BMC_URL='https://www.buymeacoffee.com/andrejhlatky13';
+const BMC_URL='https://www.buymeacoffee.com/andrejhlatt';
 
 let S, view='home', pending=null, timers=[];
 function load(){try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}}
