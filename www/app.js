@@ -9,12 +9,8 @@ const fmtDate=s=>{const d=new Date(s+'T12:00');return DN[d.getDay()]+' '+d.getDa
 const empty=()=>({patient:{name:'',room:'',spa:'',doctor:''},stay:{from:'',to:''},
  meals:{shift:1,items:[{name:'Raňajky',time:'08:00',end:'09:00'},{name:'Obed',time:'12:00',end:'13:00'},{name:'Večera',time:'18:00',end:'19:00'}],skipLunch:false},
  tipRules:[{match:'vírivka|bazén|inhalácia man',tip:'🩳 Zober si plavky'}],notifyMinutes:[30,15],fontSize:19,events:[]});
-const PRESETS={
- 'Všeobecné kúpele':{meals:empty().meals,tipRules:empty().tipRules},
- 'Číž':{meals:empty().meals,tipRules:[{match:'vírivka|bazén|inhalácia man',tip:'🩳 Zober si plavky'}]},
- 'Piešťany':{meals:{shift:1,items:[{name:'Raňajky',time:'07:30',end:'09:00'},{name:'Obed',time:'12:00',end:'13:30'},{name:'Večera',time:'18:00',end:'19:30'}],skipLunch:false},tipRules:[{match:'bazén|zrkadlisko|vírivka|bahno',tip:'🩳 Zober si plavky a uterák'}]},
- 'Nimnica':{meals:{shift:1,items:[{name:'Raňajky',time:'07:30',end:'09:00'},{name:'Obed',time:'12:00',end:'13:30'},{name:'Večera',time:'18:00',end:'19:00'}],skipLunch:false},tipRules:[{match:'bazén|vírivka|perličk',tip:'🩳 Zober si plavky'}]}
-};
+const BMC_URL='https://www.buymeacoffee.com/andrejhlatky13';
+
 let S, view='home', pending=null, timers=[];
 function load(){try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}}
 function save(){localStorage.setItem(KEY,JSON.stringify(S));applyFont();reschedule()}
@@ -98,9 +94,13 @@ function photo(){return `<div class="card"><h2>Nahrať plán z fotky</h2><p>Odfo
  <label class="btn" style="display:block;text-align:center">📋 Plán procedúr<input type="file" accept="image/*" capture="environment" id="fp" hidden></label>
  <label class="btn btn2" style="display:block;text-align:center">🍽️ Strava (časy jedla)<input type="file" accept="image/*" capture="environment" id="fm" hidden></label>
  <button class="btn2" id="manual">✍️ Pridať ručne</button><div id="ocrst"></div></div>`}
-function onboard(){const m=PRESETS['Všeobecné kúpele'].meals.items;return `<div class="card"><h2>Nový pobyt</h2><p>Nastav si pobyt. Procedúry pridáš v ďalšom kroku (fotkou alebo ručne).</p>
- <label>Predvoľba (len tipy a časy jedál)</label><select id="o_preset">${Object.keys(PRESETS).map(k=>`<option>${k}</option>`).join('')}</select>
- <label>Názov kúpeľov (nepovinné)</label><input id="o_spa" placeholder="napr. Kúpele Dudince">
+function onboard(){const m=empty().meals.items;return `<div class="card"><h2>Nový pobyt</h2><p>Začni všeobecnými kúpeľmi, napíš vlastný názov, alebo načítaj údaje z fotky kúpeľného preukazu / plánu.</p>
+ <div class="row" style="flex-wrap:wrap;gap:.5rem;margin:.6rem 0">
+  <button type="button" class="btn2" id="o_mode_gen" data-mode="gen">Všeobecné kúpele</button>
+  <button type="button" class="btn2" id="o_mode_custom" data-mode="custom">Vlastný názov</button>
+  <button type="button" class="btn2" id="o_mode_photo" data-mode="photo">📷 Načítať z fotky</button>
+ </div>
+ <div id="o_custom_wrap" style="display:none"><label>Názov kúpeľov</label><input id="o_spa" placeholder="napr. tvoje kúpele"></div>
  <label>Meno (nepovinné)</label><input id="o_name"><label>Izba (nepovinné)</label><input id="o_room">
  <h3>Časy jedál</h3><div id="o_meals">${m.map((x,i)=>`<label>${x.name}</label><div class="row"><input type="time" data-om="${i}" value="${x.time}"><input type="time" data-oe="${i}" value="${x.end}"></div>`).join('')}</div>
  <label class="tog">Bez obeda<input type="checkbox" id="o_skl"></label>
@@ -124,11 +124,11 @@ function settings(){return `<div class="card"><h2>Upozornenia</h2>
  ${S.tipRules.map((r,i)=>`<div class="rev"><input data-tm="${i}" value="${esc(r.match)}" placeholder="napr. vírivka|bazén"><input data-tt="${i}" value="${esc(r.tip)}" placeholder="Tip"><button class="danger" data-tdel="${i}">Zmazať</button></div>`).join('')}
  <button class="btn2" id="tadd">➕ Pridať tip</button></div>
  <div class="card"><h2>Strava</h2>${S.meals.items.map((m,i)=>`<div class="row"><input data-mn="${i}" value="${esc(m.name)}"><div class="row"><input type="time" data-mt="${i}" value="${m.time}"><input type="time" data-me="${i}" value="${m.end||''}"></div></div>`).join('')}
- <label class="tog">Bez obeda<input type="checkbox" id="skl" ${S.meals.skipLunch?'checked':''}></label>
- <label>Predvoľba kúpeľov</label><select id="preset"><option value="">—</option>${Object.keys(PRESETS).map(k=>`<option>${k}</option>`).join('')}</select></div>
- <div class="card"><h2>Pobyt</h2><label>Kúpele</label><input id="s_spa" value="${esc(S.patient.spa)}"><label>Meno</label><input id="s_name" value="${esc(S.patient.name)}"><label>Izba</label><input id="s_room" value="${esc(S.patient.room)}">
+ <label class="tog">Bez obeda<input type="checkbox" id="skl" ${S.meals.skipLunch?'checked':''}></label></div>
+ <div class="card"><h2>Pobyt</h2><label>Kúpele</label><input id="s_spa" value="${esc(S.patient.spa)}" placeholder="Všeobecné kúpele alebo vlastný názov"><label>Meno</label><input id="s_name" value="${esc(S.patient.name)}"><label>Izba</label><input id="s_room" value="${esc(S.patient.room)}">
  <div class="row"><div><label>Od</label><input type="date" id="s_from" value="${S.stay.from}"></div><div><label>Do</label><input type="date" id="s_to" value="${S.stay.to}"></div></div></div>
  <div class="card"><h2>Veľkosť písma</h2><input type="range" min="17" max="28" id="fs" value="${S.fontSize||19}"></div>
+ <div class="card"><h2>Podpora autora</h2><p>Appka je zadarmo. Ak chceš podporiť autora:</p><a class="btn btn2" href="${BMC_URL}" target="_blank" rel="noopener">☕ Buy Me a Coffee</a></div>
  <div class="card"><button class="danger" id="clear">🗑️ Vymazať pobyt</button></div>`}
 
 // ---------- OCR ----------
@@ -177,18 +177,25 @@ function bind(){
    S.events.push(...ok.map(r=>({date:r.date,time:r.time,name:r.name,room:r.room||'',therapist:'',kind:'procedure'})));
    const ds=S.events.map(e=>e.date).sort();if(!S.stay.from||ds[0]<S.stay.from)S.stay.from=ds[0];if(!S.stay.to||ds.at(-1)>S.stay.to)S.stay.to=ds.at(-1)}
   if(pending.img)URL.revokeObjectURL(pending.img);pending=null;save();view='today';render();alert('Uložené ✅')});
- const fillMeals=()=>{const p=PRESETS[$('#o_preset').value];$('#o_meals').innerHTML=p.meals.items.map((x,i)=>`<label>${x.name}</label><div class="row"><input type="time" data-om="${i}" value="${x.time}"><input type="time" data-oe="${i}" value="${x.end}"></div>`).join('');$('#o_skl').checked=!!p.meals.skipLunch};
- on('#o_preset','onchange',fillMeals);on('#o_skip','onclick',()=>{view='home';render()});
- on('#o_ok','onclick',()=>{const key=$('#o_preset').value,p=JSON.parse(JSON.stringify(PRESETS[key]));const fs=S?.fontSize||19;S=empty();S.fontSize=fs;Object.assign(S,p);
+ let oMode='gen';
+ const setMode=m=>{oMode=m;const w=$('#o_custom_wrap');if(w)w.style.display=m==='custom'?'block':'none';
+  ['gen','custom','photo'].forEach(k=>{const b=$('#o_mode_'+k);if(b)b.classList.toggle('on',oMode===k)})};
+ on('#o_mode_gen','onclick',()=>setMode('gen'));
+ on('#o_mode_custom','onclick',()=>setMode('custom'));
+ on('#o_mode_photo','onclick',()=>{setMode('photo');const fs=S?.fontSize||19;S=empty();S.fontSize=fs;S.patient.spa='';S.patient.name=$('#o_name')?.value||'';S.patient.room=$('#o_room')?.value||'';S.stay={from:$('#o_from')?.value||'',to:$('#o_to')?.value||''};save();view='photo';render()});
+ setMode('gen');
+ on('#o_skip','onclick',()=>{view='home';render()});
+ on('#o_ok','onclick',()=>{const fs=S?.fontSize||19;S=empty();S.fontSize=fs;
   S.meals.items.forEach((x,i)=>{const a=document.querySelector(`[data-om="${i}"]`),b=document.querySelector(`[data-oe="${i}"]`);if(a)x.time=a.value||x.time;if(b)x.end=b.value});S.meals.skipLunch=$('#o_skl').checked;
-  S.patient.spa=$('#o_spa').value.trim()||(key==='Všeobecné kúpele'?'':'Kúpele '+key);S.patient.name=$('#o_name').value;S.patient.room=$('#o_room').value;S.stay={from:$('#o_from').value,to:$('#o_to').value};save();askPermission();view='home';render()});
+  const spaCustom=($('#o_spa')?.value||'').trim();
+  S.patient.spa=oMode==='custom'?(spaCustom||'Vlastné kúpele'):(spaCustom||'Všeobecné kúpele');
+  S.patient.name=$('#o_name').value;S.patient.room=$('#o_room').value;S.stay={from:$('#o_from').value,to:$('#o_to').value};save();askPermission();view='home';render()});
  document.querySelectorAll('[data-nm]').forEach(c=>c.onchange=()=>{S.notifyMinutes=[...document.querySelectorAll('[data-nm]:checked')].map(x=>+x.dataset.nm).sort((a,b)=>b-a);save()});
  document.querySelectorAll('[data-tm],[data-tt]').forEach(i=>i.onchange=()=>{const k=+(i.dataset.tm??i.dataset.tt);S.tipRules[k][i.dataset.tm!=null?'match':'tip']=i.value;save()});
  document.querySelectorAll('[data-tdel]').forEach(b=>b.onclick=()=>{S.tipRules.splice(+b.dataset.tdel,1);save();render()});
  on('#tadd','onclick',()=>{S.tipRules.push({match:'',tip:''});save();render()});
  document.querySelectorAll('[data-mn],[data-mt],[data-me]').forEach(i=>i.onchange=()=>{const d=i.dataset,k=+(d.mn??d.mt??d.me);S.meals.items[k][d.mn!=null?'name':d.mt!=null?'time':'end']=i.value;save()});
  on('#skl','onchange',e=>{S.meals.skipLunch=e.target.checked;save()});
- on('#preset','onchange',e=>{const p=PRESETS[e.target.value];if(p&&confirm('Prepísať stravu a tipy predvoľbou '+e.target.value+'?')){Object.assign(S,JSON.parse(JSON.stringify(p)));save();render()}});
  ['spa','name','room'].forEach(k=>on('#s_'+k,'onchange',e=>{S.patient[k]=e.target.value;save();render()}));
  ['from','to'].forEach(k=>on('#s_'+k,'onchange',e=>{S.stay[k]=e.target.value;save()}));
  on('#fs','oninput',e=>{S.fontSize=+e.target.value;applyFont()});on('#fs','onchange',()=>save());
