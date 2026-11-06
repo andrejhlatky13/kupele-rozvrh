@@ -1,0 +1,209 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="sk.kupelnyrozvrh.app"
+4    android:versionCode="4"
+5    android:versionName="0.1.3" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="22"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Permissions -->
+12
+13    <uses-permission android:name="android.permission.INTERNET" />
+13-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:40:5-67
+13-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:40:22-64
+14    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+14-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:41:5-77
+14-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:41:22-74
+15    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+15-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:42:5-79
+15-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:42:22-76
+16    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+16-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:43:5-81
+16-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:43:22-78
+17    <uses-permission android:name="android.permission.CAMERA" />
+17-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:44:5-65
+17-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:44:22-62
+18
+19    <queries>
+19-->[:capacitor-camera] /workspace/kupele-rozvrh/node_modules/@capacitor/camera/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:7:5-11:15
+20        <intent>
+20-->[:capacitor-camera] /workspace/kupele-rozvrh/node_modules/@capacitor/camera/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:8:9-10:18
+21            <action android:name="android.media.action.IMAGE_CAPTURE" />
+21-->[:capacitor-camera] /workspace/kupele-rozvrh/node_modules/@capacitor/camera/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:9:13-73
+21-->[:capacitor-camera] /workspace/kupele-rozvrh/node_modules/@capacitor/camera/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:9:21-70
+22        </intent>
+23    </queries>
+24
+25    <uses-permission android:name="android.permission.WAKE_LOCK" />
+25-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:8:5-68
+25-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:8:22-65
+26
+27    <permission
+27-->[androidx.core:core:1.12.0] /home/box/.gradle/caches/transforms-3/4f7b0d764f8b5d0d84c4d0344e1adc27/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+28        android:name="sk.kupelnyrozvrh.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+28-->[androidx.core:core:1.12.0] /home/box/.gradle/caches/transforms-3/4f7b0d764f8b5d0d84c4d0344e1adc27/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+29        android:protectionLevel="signature" />
+29-->[androidx.core:core:1.12.0] /home/box/.gradle/caches/transforms-3/4f7b0d764f8b5d0d84c4d0344e1adc27/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+30
+31    <uses-permission android:name="sk.kupelnyrozvrh.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+31-->[androidx.core:core:1.12.0] /home/box/.gradle/caches/transforms-3/4f7b0d764f8b5d0d84c4d0344e1adc27/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+31-->[androidx.core:core:1.12.0] /home/box/.gradle/caches/transforms-3/4f7b0d764f8b5d0d84c4d0344e1adc27/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+32
+33    <application
+33-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:4:5-36:19
+34        android:allowBackup="true"
+34-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:5:9-35
+35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+35-->[androidx.core:core:1.12.0] /home/box/.gradle/caches/transforms-3/4f7b0d764f8b5d0d84c4d0344e1adc27/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+36        android:extractNativeLibs="true"
+37        android:icon="@mipmap/ic_launcher"
+37-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:6:9-43
+38        android:label="@string/app_name"
+38-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:7:9-41
+39        android:roundIcon="@mipmap/ic_launcher_round"
+39-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:8:9-54
+40        android:supportsRtl="true"
+40-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:9:9-35
+41        android:theme="@style/AppTheme" >
+41-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:10:9-40
+42        <activity
+42-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:12:9-25:20
+43            android:name="sk.kupelnyrozvrh.app.MainActivity"
+43-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:14:13-41
+44            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
+44-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:13:13-129
+45            android:exported="true"
+45-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:18:13-36
+46            android:label="@string/title_activity_main"
+46-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:15:13-56
+47            android:launchMode="singleTask"
+47-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:17:13-44
+48            android:theme="@style/AppTheme.NoActionBarLaunch" >
+48-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:16:13-62
+49            <intent-filter>
+49-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:20:13-23:29
+50                <action android:name="android.intent.action.MAIN" />
+50-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:21:17-69
+50-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:21:25-66
+51
+52                <category android:name="android.intent.category.LAUNCHER" />
+52-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:22:17-77
+52-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:22:27-74
+53            </intent-filter>
+54        </activity>
+55
+56        <provider
+57            android:name="androidx.core.content.FileProvider"
+57-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:28:13-62
+58            android:authorities="sk.kupelnyrozvrh.app.fileprovider"
+58-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:29:13-64
+59            android:exported="false"
+59-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:30:13-37
+60            android:grantUriPermissions="true" >
+60-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:31:13-47
+61            <meta-data
+61-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:32:13-34:64
+62                android:name="android.support.FILE_PROVIDER_PATHS"
+62-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:33:17-67
+63                android:resource="@xml/file_paths" />
+63-->/workspace/kupele-rozvrh/android/app/src/main/AndroidManifest.xml:34:17-51
+64        </provider>
+65
+66        <receiver android:name="com.capacitorjs.plugins.localnotifications.TimedNotificationPublisher" />
+66-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:12:9-106
+66-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:12:19-103
+67        <receiver android:name="com.capacitorjs.plugins.localnotifications.NotificationDismissReceiver" />
+67-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:13:9-107
+67-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:13:19-104
+68        <receiver
+68-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:14:9-23:20
+69            android:name="com.capacitorjs.plugins.localnotifications.LocalNotificationRestoreReceiver"
+69-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-103
+70            android:directBootAware="true"
+70-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:16:13-43
+71            android:exported="false" >
+71-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:17:13-37
+72            <intent-filter>
+72-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:18:13-22:29
+73                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+73-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:19:17-86
+73-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:19:25-83
+74                <action android:name="android.intent.action.BOOT_COMPLETED" />
+74-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:20:17-79
+74-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:20:25-76
+75                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+75-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:21:17-82
+75-->[:capacitor-local-notifications] /workspace/kupele-rozvrh/node_modules/@capacitor/local-notifications/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:21:25-79
+76            </intent-filter>
+77        </receiver>
+78
+79        <provider
+79-->[androidx.emoji2:emoji2:1.2.0] /home/box/.gradle/caches/transforms-3/61f606930917a64588c199b54d3d711a/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+80            android:name="androidx.startup.InitializationProvider"
+80-->[androidx.emoji2:emoji2:1.2.0] /home/box/.gradle/caches/transforms-3/61f606930917a64588c199b54d3d711a/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+81            android:authorities="sk.kupelnyrozvrh.app.androidx-startup"
+81-->[androidx.emoji2:emoji2:1.2.0] /home/box/.gradle/caches/transforms-3/61f606930917a64588c199b54d3d711a/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+82            android:exported="false" >
+82-->[androidx.emoji2:emoji2:1.2.0] /home/box/.gradle/caches/transforms-3/61f606930917a64588c199b54d3d711a/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+83            <meta-data
+83-->[androidx.emoji2:emoji2:1.2.0] /home/box/.gradle/caches/transforms-3/61f606930917a64588c199b54d3d711a/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+84                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+84-->[androidx.emoji2:emoji2:1.2.0] /home/box/.gradle/caches/transforms-3/61f606930917a64588c199b54d3d711a/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+85                android:value="androidx.startup" />
+85-->[androidx.emoji2:emoji2:1.2.0] /home/box/.gradle/caches/transforms-3/61f606930917a64588c199b54d3d711a/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+86            <meta-data
+86-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/box/.gradle/caches/transforms-3/7d158143758428a9a27e664e481c199e/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+87                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+87-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/box/.gradle/caches/transforms-3/7d158143758428a9a27e664e481c199e/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+88                android:value="androidx.startup" />
+88-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/box/.gradle/caches/transforms-3/7d158143758428a9a27e664e481c199e/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+89            <meta-data
+89-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+90                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+91                android:value="androidx.startup" />
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+92        </provider>
+93
+94        <receiver
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+95            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+95-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+96            android:directBootAware="false"
+96-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+97            android:enabled="true"
+97-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+98            android:exported="true"
+98-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+99            android:permission="android.permission.DUMP" >
+99-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+100            <intent-filter>
+100-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+101                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+101-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+101-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+102            </intent-filter>
+103            <intent-filter>
+103-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+104                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+104-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+104-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+105            </intent-filter>
+106            <intent-filter>
+106-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+107                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+107-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+107-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+108            </intent-filter>
+109            <intent-filter>
+109-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+110                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+110-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+110-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/box/.gradle/caches/transforms-3/c4b6893a58c24e59df590ee54241c077/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+111            </intent-filter>
+112        </receiver>
+113    </application>
+114
+115</manifest>
