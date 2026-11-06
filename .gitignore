@@ -4,3 +4,6 @@ android/build
 android/.gradle
 android/local.properties
 dist
+*.keystore
+*.jks
+keystore*.properties

@@ -1,14 +1,25 @@
 apply plugin: 'com.android.application'
 
+def ksFile = file('/home/box/secrets/kupele-rozvrh-keystore.txt')
+def ks = new Properties()
+if (ksFile.exists()) ks.load(new FileInputStream(ksFile))
 android {
+    signingConfigs {
+        release {
+            if (ksFile.exists()) {
+                storeFile file(ks['storeFile']); storePassword ks['storePassword']
+                keyAlias ks['keyAlias']; keyPassword ks['keyPassword']
+            }
+        }
+    }
     namespace "sk.kupelnyrozvrh.app"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "sk.kupelnyrozvrh.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -18,6 +29,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

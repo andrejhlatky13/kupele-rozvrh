@@ -144,11 +144,11 @@ function parseMeals(text){const out=[];const N={'raňajk':'Raňajky','ranajk':'R
   out.push({name:N[k],time:ts[0]||'',end:ts[1]||''})}
  return out}
 let tessP=null;
-function loadTess(){return tessP||(tessP=new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s)}))}
+function loadTess(){return tessP||(tessP=new Promise((res,rej)=>{const s=document.createElement('script');s.src='vendor/tess/tesseract.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s)}))}
 async function doOcr(file,type){
  const st=$('#ocrst');const img=URL.createObjectURL(file);st.innerHTML='<p>⏳ Čítam text z fotky… (môže trvať 30–60 s)</p>';
  let raw='';
- try{await loadTess();const w=await Tesseract.createWorker(['slk','eng'],1,{logger:m=>{if(m.status==='recognizing text')st.innerHTML='<p>⏳ Čítam… '+Math.round(m.progress*100)+' %</p>'}});
+ try{await loadTess();const w=await Tesseract.createWorker(['slk','eng'],1,{workerPath:new URL('vendor/tess/worker.min.js',location.href).href,corePath:new URL('vendor/tess/',location.href).href,langPath:new URL('vendor/tess/lang',location.href).href,gzip:false,workerBlobURL:false,logger:m=>{if(m.status==='recognizing text')st.innerHTML='<p>⏳ Čítam… '+Math.round(m.progress*100)+' %</p>'}});
   const r=await w.recognize(file);raw=r.data.text;await w.terminate()}catch(e){st.innerHTML='<p>Text sa nepodarilo prečítať (bez internetu?). Doplň riadky ručne.</p>'}
  let rows=type==='meal'?parseMeals(raw):parseProcedures(raw);
  if(!rows.length)rows=type==='meal'?S.meals.items.map(x=>({...x})):[{date:ymd(new Date()),time:'',name:'',room:''}];
