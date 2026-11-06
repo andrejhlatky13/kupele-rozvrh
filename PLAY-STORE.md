@@ -1,10 +1,10 @@
 # Google Play – checklist (Kúpeľný rozvrh)
 
 - **Package name:** `sk.kupelnyrozvrh.app`
-- **Verzia:** 0.1.3 (versionCode 4)
-- **Cena:** zadarmo (voliteľná podpora: Buy Me a Coffee https://www.buymeacoffee.com/andrejhlatky13)
+- **Verzia:** 0.1.4 (versionCode 5)
+- **Cena:** zadarmo (voliteľná podpora: Buy Me a Coffee https://www.buymeacoffee.com/andrejhlatt)
 - **Privacy policy:** https://andrejhlatky13.github.io/kupele-rozvrh/privacy.html
-- **AAB:** `dist/kupelny-rozvrh-0.1.3-release.aab`
+- **AAB:** `dist/kupelny-rozvrh-0.1.4-release.aab`
 - **Ikona 512×512:** `store-icon-512.png`
 - **Feature graphic:** `dist/feature-graphic-1024x500.png`
 - **Keystore:** mimo gitu (`/home/box/secrets/`). Play App Signing – nestratiť!
@@ -38,7 +38,7 @@ Aplikácia je pripomienkovač rozvrhu: používateľ si uloží časy kúpeľný
 4. Testovanie → Interné testovanie → Nové vydanie → nahrať AAB.
 5. Nové osobné účty: uzavretý test s 12 testermi 14 dní pred produkciou.
 
-## 0.1.3
+## 0.1.4
 - Žiadne predvoľby konkrétnych kúpeľov (Číž / Piešťany / Nimnica).
 - Nový pobyt: Všeobecné kúpele, vlastný názov, alebo načítanie z fotky.
 - Odkaz Buy Me a Coffee v Nastaveniach.
