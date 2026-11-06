@@ -11,7 +11,7 @@ const empty=()=>({patient:{name:'',room:'',spa:'',doctor:''},stay:{from:'',to:''
  tipRules:[{match:'vírivka|bazén|inhalácia man',tip:'🩳 Zober si plavky'}],notifyMinutes:[30,15],fontSize:19,events:[]});
 const PRESETS={
  'Všeobecné kúpele':{meals:empty().meals,tipRules:empty().tipRules},
- 'Číž':{meals:{shift:2,items:[{name:'Raňajky',time:'08:00',end:'09:00'},{name:'Večera',time:'18:30',end:'19:15'}],skipLunch:true},tipRules:[{match:'vírivka|inhalácia man',tip:'🩳 Zober si plavky'}]},
+ 'Číž':{meals:empty().meals,tipRules:[{match:'vírivka|bazén|inhalácia man',tip:'🩳 Zober si plavky'}]},
  'Piešťany':{meals:{shift:1,items:[{name:'Raňajky',time:'07:30',end:'09:00'},{name:'Obed',time:'12:00',end:'13:30'},{name:'Večera',time:'18:00',end:'19:30'}],skipLunch:false},tipRules:[{match:'bazén|zrkadlisko|vírivka|bahno',tip:'🩳 Zober si plavky a uterák'}]},
  'Nimnica':{meals:{shift:1,items:[{name:'Raňajky',time:'07:30',end:'09:00'},{name:'Obed',time:'12:00',end:'13:30'},{name:'Večera',time:'18:00',end:'19:00'}],skipLunch:false},tipRules:[{match:'bazén|vírivka|perličk',tip:'🩳 Zober si plavky'}]}
 };
@@ -129,7 +129,7 @@ function settings(){return `<div class="card"><h2>Upozornenia</h2>
  <div class="card"><h2>Pobyt</h2><label>Kúpele</label><input id="s_spa" value="${esc(S.patient.spa)}"><label>Meno</label><input id="s_name" value="${esc(S.patient.name)}"><label>Izba</label><input id="s_room" value="${esc(S.patient.room)}">
  <div class="row"><div><label>Od</label><input type="date" id="s_from" value="${S.stay.from}"></div><div><label>Do</label><input type="date" id="s_to" value="${S.stay.to}"></div></div></div>
  <div class="card"><h2>Veľkosť písma</h2><input type="range" min="17" max="28" id="fs" value="${S.fontSize||19}"></div>
- <div class="card"><button class="danger" id="clear">🗑️ Vymazať pobyt</button><button class="btn2" id="demo">Načítať ukážku (Číž)</button></div>`}
+ <div class="card"><button class="danger" id="clear">🗑️ Vymazať pobyt</button></div>`}
 
 // ---------- OCR ----------
 function parseProcedures(text){const rows=[];let cur='';const yr=new Date().getFullYear();
@@ -195,9 +195,7 @@ function bind(){
  on('#test','onclick',async()=>{await askPermission();const m={title:'O 15 minút',body:'Vírivka celotelová o 12:30\nMiestnosť B8\n🩳 Zober si plavky'};
   if(LN)await LN.schedule({notifications:[{id:99999,title:m.title,body:m.body,channelId:'kupele',schedule:{at:new Date(Date.now()+3000)}}]});else showWeb(m,'test')});
  on('#clear','onclick',()=>{if(confirm('Naozaj vymazať celý pobyt?')){S=empty();save();view='home';render()}});
- on('#demo','onclick',loadDemo);
 }
-async function loadDemo(){const r=await fetch('seed-ciz.json');const d=await r.json();S={...empty(),...d,fontSize:S?.fontSize||19};save();view='home';render()}
 function tick(){const el=$('#cd');if(!el)return;const nx=allEvents().find(e=>e.at>new Date());if(!nx){return}
  let s=Math.max(0,Math.floor((nx.at-new Date())/1000));const h=Math.floor(s/3600),m=Math.floor(s%3600/60);s%=60;
  el.textContent=(h?h+' h ':'')+pad(m)+' min '+pad(s)+' s';}

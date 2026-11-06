@@ -39,7 +39,7 @@ Aplikácia je pripomienkovač rozvrhu: používateľ si uloží časy kúpeľný
 ## 0.1.2 – čistá appka pre nových používateľov
 - Prvé spustenie **nenačíta žiadne dáta** (žiadna ukážka Číž). Otvorí sa „Nový pobyt“: predvoľba (Všeobecné / Číž / Piešťany / Nimnica – len tipy a časy jedál), názov kúpeľov, meno, izba, dátumy, časy jedál, „Bez obeda“.
 - Domov bez rozvrhu: tlačidlá „Pridať rozvrh“, „Odfotiť plán“, „Zadať ručne“.
-- Ukážka Číž len cez Nastavenia → „Načítať ukážku (Číž)“.
+- Ukážka/seed Číž je z appky úplne odstránená – žiadne osobné dáta v balíku.
 
 **Čo je nové (Play Console release notes):**
 Čistý štart pre nových používateľov: sprievodca novým pobytom, časy jedál, rýchle pridanie rozvrhu fotkou alebo ručne.
