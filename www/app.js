@@ -72,7 +72,8 @@ function render(){
 function evRow(e,now){const past=e.at<now;const t=tipFor(e);
  return `<div class="ev ${past?'past':''}"><div class="t">${e.time}</div><div><b>${evIcon(e)}${esc(e.name)}</b>${e.room?'<br>Miestnosť '+esc(e.room):''}${e.end?'<br>do '+e.end:''}${t.map(x=>'<br><span class="tip">'+esc(x)+'</span>').join('')}</div></div>`}
 function home(){
- if(!S.events.length&&!S.stay.from)return `<div class="card"><h2>Vitaj!</h2><p>Zatiaľ nemáš nahratý pobyt.</p><button data-go="onboard">Začať nový pobyt</button></div>`;
+ if(!S.events.length){const hdr=S.stay.from?`<h2>Pobyt je pripravený</h2><p>${esc(S.patient.spa||'Kúpele')} · ${S.stay.from?fmtDate(S.stay.from):''}${S.stay.to?' – '+fmtDate(S.stay.to):''}</p><p>Teraz pridaj rozvrh procedúr.</p>`:`<h2>Vitaj! 👋</h2><p>Zatiaľ nemáš žiadny rozvrh. Začni novým pobytom alebo rovno pridaj plán.</p>`;
+  return `<div class="card">${hdr}${S.stay.from?'':'<button data-go="onboard">🆕 Nový pobyt</button>'}<button data-go="photo">📋 Pridať rozvrh</button><button class="btn2" data-go="photo">📷 Odfotiť plán</button><button class="btn2" id="manual">✍️ Zadať ručne</button></div>${S.stay.from?notifCard():''}`}
  const now=new Date(),nx=allEvents().find(e=>e.at>now);
  if(!nx)return `<div class="card"><h2>Žiadne ďalšie procedúry</h2><p>Pobyt je ukončený alebo plán je prázdny.</p><button data-go="photo">📷 Pridať plán</button></div>`;
  const t=tipFor(nx);
@@ -97,11 +98,14 @@ function photo(){return `<div class="card"><h2>Nahrať plán z fotky</h2><p>Odfo
  <label class="btn" style="display:block;text-align:center">📋 Plán procedúr<input type="file" accept="image/*" capture="environment" id="fp" hidden></label>
  <label class="btn btn2" style="display:block;text-align:center">🍽️ Strava (časy jedla)<input type="file" accept="image/*" capture="environment" id="fm" hidden></label>
  <button class="btn2" id="manual">✍️ Pridať ručne</button><div id="ocrst"></div></div>`}
-function onboard(){return `<div class="card"><h2>Nový pobyt</h2>
- <label>Kúpele</label><select id="o_preset">${Object.keys(PRESETS).map(k=>`<option>${k}</option>`).join('')}</select>
- <label>Meno</label><input id="o_name"><label>Izba</label><input id="o_room">
+function onboard(){const m=PRESETS['Všeobecné kúpele'].meals.items;return `<div class="card"><h2>Nový pobyt</h2><p>Nastav si pobyt. Procedúry pridáš v ďalšom kroku (fotkou alebo ručne).</p>
+ <label>Predvoľba (len tipy a časy jedál)</label><select id="o_preset">${Object.keys(PRESETS).map(k=>`<option>${k}</option>`).join('')}</select>
+ <label>Názov kúpeľov (nepovinné)</label><input id="o_spa" placeholder="napr. Kúpele Dudince">
+ <label>Meno (nepovinné)</label><input id="o_name"><label>Izba (nepovinné)</label><input id="o_room">
+ <h3>Časy jedál</h3><div id="o_meals">${m.map((x,i)=>`<label>${x.name}</label><div class="row"><input type="time" data-om="${i}" value="${x.time}"><input type="time" data-oe="${i}" value="${x.end}"></div>`).join('')}</div>
+ <label class="tog">Bez obeda<input type="checkbox" id="o_skl"></label>
  <div class="row"><div><label>Príchod</label><input type="date" id="o_from"></div><div><label>Odchod</label><input type="date" id="o_to"></div></div>
- <button id="o_ok">Pokračovať → odfotiť plán</button></div>`}
+ <button id="o_ok">Pokračovať → pridať rozvrh</button>${S.events.length||S.stay.from?'':'<button class="btn2" id="o_skip">Preskočiť</button>'}</div>`}
 function review(){const r=pending.rows;
  return `<div class="card"><h2>Skontroluj ${pending.type==='meal'?'stravu':'procedúry'}</h2><p>Oprav čo treba. Nič sa neuloží, kým nestlačíš Uložiť.</p>
  ${pending.img?'<details><summary>Ukázať fotku</summary><img class="prev" src="'+pending.img+'"></details>':''}
@@ -173,8 +177,11 @@ function bind(){
    S.events.push(...ok.map(r=>({date:r.date,time:r.time,name:r.name,room:r.room||'',therapist:'',kind:'procedure'})));
    const ds=S.events.map(e=>e.date).sort();if(!S.stay.from||ds[0]<S.stay.from)S.stay.from=ds[0];if(!S.stay.to||ds.at(-1)>S.stay.to)S.stay.to=ds.at(-1)}
   if(pending.img)URL.revokeObjectURL(pending.img);pending=null;save();view='today';render();alert('Uložené ✅')});
- on('#o_ok','onclick',()=>{const p=PRESETS[$('#o_preset').value];S=empty();Object.assign(S,JSON.parse(JSON.stringify(p)));
-  S.patient.spa=$('#o_preset').value==='Všeobecné kúpele'?'':'Kúpele '+$('#o_preset').value;S.patient.name=$('#o_name').value;S.patient.room=$('#o_room').value;S.stay={from:$('#o_from').value,to:$('#o_to').value};save();askPermission();view='photo';render()});
+ const fillMeals=()=>{const p=PRESETS[$('#o_preset').value];$('#o_meals').innerHTML=p.meals.items.map((x,i)=>`<label>${x.name}</label><div class="row"><input type="time" data-om="${i}" value="${x.time}"><input type="time" data-oe="${i}" value="${x.end}"></div>`).join('');$('#o_skl').checked=!!p.meals.skipLunch};
+ on('#o_preset','onchange',fillMeals);on('#o_skip','onclick',()=>{view='home';render()});
+ on('#o_ok','onclick',()=>{const key=$('#o_preset').value,p=JSON.parse(JSON.stringify(PRESETS[key]));const fs=S?.fontSize||19;S=empty();S.fontSize=fs;Object.assign(S,p);
+  S.meals.items.forEach((x,i)=>{const a=document.querySelector(`[data-om="${i}"]`),b=document.querySelector(`[data-oe="${i}"]`);if(a)x.time=a.value||x.time;if(b)x.end=b.value});S.meals.skipLunch=$('#o_skl').checked;
+  S.patient.spa=$('#o_spa').value.trim()||(key==='Všeobecné kúpele'?'':'Kúpele '+key);S.patient.name=$('#o_name').value;S.patient.room=$('#o_room').value;S.stay={from:$('#o_from').value,to:$('#o_to').value};save();askPermission();view='home';render()});
  document.querySelectorAll('[data-nm]').forEach(c=>c.onchange=()=>{S.notifyMinutes=[...document.querySelectorAll('[data-nm]:checked')].map(x=>+x.dataset.nm).sort((a,b)=>b-a);save()});
  document.querySelectorAll('[data-tm],[data-tt]').forEach(i=>i.onchange=()=>{const k=+(i.dataset.tm??i.dataset.tt);S.tipRules[k][i.dataset.tm!=null?'match':'tip']=i.value;save()});
  document.querySelectorAll('[data-tdel]').forEach(b=>b.onclick=()=>{S.tipRules.splice(+b.dataset.tdel,1);save();render()});
@@ -195,7 +202,7 @@ function tick(){const el=$('#cd');if(!el)return;const nx=allEvents().find(e=>e.a
  let s=Math.max(0,Math.floor((nx.at-new Date())/1000));const h=Math.floor(s/3600),m=Math.floor(s%3600/60);s%=60;
  el.textContent=(h?h+' h ':'')+pad(m)+' min '+pad(s)+' s';}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{view=b.dataset.v;render()});
-(async()=>{load();if(!S){S=empty();try{await loadDemo()}catch(e){}}applyFont();render();reschedule();setInterval(tick,1000);tick();
+(async()=>{load();if(!S){S=empty();view='onboard'}applyFont();render();reschedule();setInterval(tick,1000);tick();
  setInterval(()=>{if(view==='home'||view==='today'){const a=document.activeElement;if(!a||a===document.body)render()}},60000);
  if('serviceWorker'in navigator&&!isNative)navigator.serviceWorker.register('sw.js').catch(()=>{});
  if(LN)askPermission().then(reschedule);

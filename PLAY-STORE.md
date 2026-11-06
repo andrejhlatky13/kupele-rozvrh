@@ -1,9 +1,9 @@
 # Google Play – checklist (Kúpeľný rozvrh)
 
 - **Package name:** `sk.kupelnyrozvrh.app`
-- **Verzia:** 0.1.1 (versionCode 2)
+- **Verzia:** 0.1.2 (versionCode 3)
 - **Privacy policy:** https://andrejhlatky13.github.io/kupele-rozvrh/privacy.html
-- **AAB:** `dist/kupelny-rozvrh-0.1.1-release.aab` (aj na GitHub Release v0.1.1)
+- **AAB:** `dist/kupelny-rozvrh-0.1.2-release.aab` (aj na GitHub Release v0.1.2)
 - **Ikona 512×512:** `store-icon-512.png`
 - **Keystore:** mimo gitu (`/home/box/secrets/`). Odporúčame Play App Signing – tento kľúč bude upload key. Nestratiť!
 
@@ -35,3 +35,11 @@ Aplikácia je pripomienkovač rozvrhu: používateľ si uloží časy kúpeľný
 3. Store listing: popisy vyššie, ikona 512, feature graphic 1024×500, **min. 2 screenshoty telefónu** (urobiť ručne).
 4. Testovanie → Interné testovanie → Nové vydanie → nahrať AAB → zaviesť.
 5. Nové osobné účty: uzavretý test s 12 testermi 14 dní pred produkciou.
+
+## 0.1.2 – čistá appka pre nových používateľov
+- Prvé spustenie **nenačíta žiadne dáta** (žiadna ukážka Číž). Otvorí sa „Nový pobyt“: predvoľba (Všeobecné / Číž / Piešťany / Nimnica – len tipy a časy jedál), názov kúpeľov, meno, izba, dátumy, časy jedál, „Bez obeda“.
+- Domov bez rozvrhu: tlačidlá „Pridať rozvrh“, „Odfotiť plán“, „Zadať ručne“.
+- Ukážka Číž len cez Nastavenia → „Načítať ukážku (Číž)“.
+
+**Čo je nové (Play Console release notes):**
+Čistý štart pre nových používateľov: sprievodca novým pobytom, časy jedál, rýchle pridanie rozvrhu fotkou alebo ručne.
