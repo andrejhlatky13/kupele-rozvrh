@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Kúpeľný rozvrh</string>
+    <string name="title_activity_main">Kúpeľný rozvrh</string>
+    <string name="package_name">sk.kupelnyrozvrh.app</string>
+    <string name="custom_url_scheme">sk.kupelnyrozvrh.app</string>
+</resources>
